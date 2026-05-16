@@ -1,107 +1,111 @@
-# 🚗 AI Used Car Price Predictor API
+# AI Car Price Predictor 🚗
 
-An AI-powered FastAPI application that predicts the estimated resale price range of used cars in India using Large Language Models (LLMs) via LangChain and OpenAI.
+An AI-powered used car price prediction web application built using:
 
----
+* FastAPI
+* LangChain
+* OpenAI
+* HTML/CSS/JavaScript
 
-# 📌 Features
-
-- Predicts used car price range in lakh rupees
-- Uses OpenAI LLM through LangChain
-- REST API built with FastAPI
-- Structured request validation using Pydantic
-- Environment variable support using dotenv
-- Easy to extend for ML models or database integration
+The application predicts a fair used-car price range in India based on car details such as model, year, fuel type, transmission, city, ownership, and overall condition.
 
 ---
 
-# 🛠️ Tech Stack
+# Features
 
-| Technology | Purpose |
-|---|---|
-| Python | Backend language |
-| FastAPI | REST API framework |
-| LangChain | LLM orchestration |
-| OpenAI | AI model |
-| Pydantic | Data validation |
-| dotenv | Environment variable management |
+* 🚗 Used car price prediction
+* 🤖 AI-generated valuation using OpenAI
+* ⚡ FastAPI backend
+* 🌐 Simple frontend web interface
+* 🔗 REST API integration
+* 📄 Swagger API documentation
+* 🎨 Responsive UI
+* 🔒 Environment variable support using `.env`
 
 ---
 
-# 📂 Project Structure
+# Tech Stack
 
-```bash
+## Backend
+
+* Python
+* FastAPI
+* LangChain
+* OpenAI API
+* Uvicorn
+
+## Frontend
+
+* HTML
+* CSS
+* JavaScript
+
+---
+
+# Project Structure
+
+```text
 project/
 │
-├── main.py
-├── .env
+├── car_price_predictor.py     # FastAPI backend
+├── frontend/
+│   ├── index.html             # Frontend UI
+│   ├── style.css              # Styling
+│   └── script.js              # API integration
+│
+├── .env                       # OpenAI API Key
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-# ⚙️ Installation
+# Installation & Setup
 
-## 1️⃣ Clone Repository
+## 1. Clone Repository
 
 ```bash
-git clone <your-repo-url>
+git clone <your-repository-url>
 cd <project-folder>
 ```
 
 ---
 
-## 2️⃣ Create Virtual Environment
+# 2. Create Virtual Environment
 
-### Windows
+## Windows
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-### Linux/Mac
+## Linux / Mac
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 ---
 
-## 3️⃣ Install Dependencies
+# 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install fastapi uvicorn langchain langchain-openai python-dotenv
 ```
 
 ---
 
-# 📦 Required Packages
+# 4. Create `.env` File
 
-Create a `requirements.txt` file with:
+Create a file named:
 
-```txt
-fastapi
-uvicorn
-langchain
-langchain-openai
-python-dotenv
-pydantic
+```text
+.env
 ```
 
-Install:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-# 🔑 Environment Variables
-
-Create a `.env` file:
+Add your OpenAI API key:
 
 ```env
 OPENAI_API_KEY=your_openai_api_key
@@ -109,39 +113,81 @@ OPENAI_API_KEY=your_openai_api_key
 
 ---
 
-# ▶️ Run Application
+# Backend Code
 
-```bash
-uvicorn main:app --reload
+The backend is implemented using FastAPI and LangChain.
+
+Main API endpoint:
+
+```text
+POST /predict-price/
 ```
 
-Server will start at:
+---
 
-```txt
+# Run Backend Server
+
+Start FastAPI server:
+
+```bash
+uvicorn car_price_predictor:app --reload
+```
+
+Server will run on:
+
+```text
 http://127.0.0.1:8000
 ```
 
 ---
 
-# 📘 Swagger API Documentation
+# API Documentation
 
-FastAPI automatically generates API docs.
+FastAPI automatically generates Swagger UI.
 
-Open:
+Open in browser:
 
-```txt
+```text
 http://127.0.0.1:8000/docs
 ```
 
 ---
 
-# 🚘 API Endpoint
+# Run Frontend
 
-## POST `/predict-price/`
+Open a new terminal.
 
-Predict estimated used car price.
+Move into frontend directory:
 
-### Request Body
+```bash
+cd frontend
+```
+
+Run local frontend server:
+
+```bash
+python -m http.server 5500
+```
+
+---
+
+# Open Web Application
+
+Open browser:
+
+```text
+http://127.0.0.1:5500
+```
+
+You will see:
+
+* Car details form
+* Predict Price button
+* AI-generated price prediction
+
+---
+
+# Example API Request
 
 ```json
 {
@@ -158,7 +204,7 @@ Predict estimated used car price.
 
 ---
 
-# ✅ Sample Response
+# Example Response
 
 ```json
 {
@@ -172,77 +218,72 @@ Predict estimated used car price.
     "owners": 1,
     "condition": "good"
   },
-  "price_estimate": "Estimated price range: 7–8 lakh\nReason: Honda City has strong resale value, moderate mileage, and single ownership which increases buyer confidence."
+  "price_estimate": "Estimated price range: 7–8 lakh\nReason: Well-maintained Honda City with moderate mileage and strong resale value in Pune market."
 }
 ```
 
 ---
 
-# 🧠 How It Works
-
-1. User sends car details through API
-2. FastAPI validates request using Pydantic
-3. LangChain formats prompt dynamically
-4. OpenAI model generates estimated price range
-5. API returns structured response
-
----
-
-# 🔄 LangChain Workflow
+# Application Architecture
 
 ```text
-User Input
-    ↓
-PromptTemplate
-    ↓
-LangChain Chain
-    ↓
+Frontend (HTML/CSS/JavaScript)
+            ↓
+Fetch API Request
+            ↓
+FastAPI Backend
+            ↓
+LangChain Prompt Chain
+            ↓
 OpenAI LLM
-    ↓
-Price Estimation Response
+            ↓
+AI Price Prediction
+            ↓
+Frontend Display
 ```
 
 ---
 
-# 🚀 Future Improvements
+# Future Improvements
 
-- Add real ML regression model
-- Store prediction history in database
-- Add authentication
-- Deploy on AWS/GCP/Azure
-- Add frontend UI
-- Dockerize application
-- Add car image analysis
+You can extend this project with:
 
----
-
-# 🐳 Docker Support (Future)
-
-Example Docker deployment can be added for production-ready hosting.
-
----
-
-# ☁️ Deployment Options
-
-You can deploy this project on:
-
-- AWS EC2
-- Render
-- Railway
-- Azure App Service
-- Google Cloud Run
-- Docker Containers
+* React frontend
+* Real machine learning model
+* Database integration
+* User authentication
+* Car image upload
+* Dark mode UI
+* Docker deployment
+* Cloud deployment (AWS/Render/Railway)
+* Car comparison feature
+* RAG-based pricing system
 
 ---
 
-# 👨‍💻 Author
+# Learning Outcomes
+
+This project demonstrates:
+
+* FastAPI development
+* REST API creation
+* Frontend-backend integration
+* LangChain usage
+* OpenAI API integration
+* Environment variable management
+* AI application development
+* Full-stack GenAI engineering
+
+---
+
+# License
+
+MIT License
+
+---
+
+# Author
 
 Kaustubh Tole
 
-AI/ML Enthusiast | AI for Engineering Applications
-
----
-
-# 📜 License
-
-This project is for educational and portfolio purposes.
+AI/ML | GenAI | Automation Engineering
