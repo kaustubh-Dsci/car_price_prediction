@@ -1,17 +1,33 @@
 from fastapi import FastAPI
-from langchain_openai import OpenAI
-from langchain_core.prompts import PromptTemplate 
-from pydantic import BaseModel 
+from fastapi.middleware.cors import CORSMiddleware
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
+from pydantic import BaseModel
 from dotenv import load_dotenv
-import os 
+import os
 
 load_dotenv()
 
-app = FastAPI(title="Car Price Predictor API", description="Predict car prices using OpenAI")
+app = FastAPI(
+    title="Car Price Predictor API",
+    description="Predict car prices using OpenAI"
+)
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# Allow frontend requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-llm = OpenAI(api_key=OPENAI_API_KEY)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+llm = ChatOpenAI(
+    api_key=OPENAI_API_KEY,
+    model="gpt-4o-mini"
+)
 
 price_prompt = PromptTemplate.from_template("""
 You are an expert used-car dealer in India.
@@ -34,26 +50,25 @@ Reason: <short reason>
 price_chain = price_prompt | llm
 
 
-
 class UsedCarRequest(BaseModel):
     model: str
     year: int
     km_driven: int
-    fuel_type: str      # e.g. "Petrol", "Diesel", "CNG"
-    transmission: str   # e.g. "Manual", "Automatic"
+    fuel_type: str
+    transmission: str
     city: str
-    owners: int         # e.g. 1, 2
-    condition: str      # e.g. "excellent", "good", "average"
+    owners: int
+    condition: str
 
 
 @app.post("/predict-price/")
 async def predict_price(request: UsedCarRequest):
-    # request.dict() turns Pydantic model into normal dict
+
     inputs = request.dict()
 
     result = price_chain.invoke(inputs)
 
     return {
         "car_details": inputs,
-        "price_estimate": result
+        "price_estimate": result.content
     }

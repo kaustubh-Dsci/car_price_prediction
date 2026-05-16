@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🚗 AI Car Price Predictor</h1>
+
+    <form id="carForm">
+
+        <input type="text" id="model" placeholder="Car Model" required>
+
+        <input type="number" id="year" placeholder="Year" required>
+
+        <input type="number" id="km_driven" placeholder="KM Driven" required>
+
+        <select id="fuel_type">
+            <option>Petrol</option>
+            <option>Diesel</option>
+            <option>CNG</option>
+            <option>Electric</option>
+        </select>
+
+        <select id="transmission">
+            <option>Manual</option>
+            <option>Automatic</option>
+        </select>
+
+        <input type="text" id="city" placeholder="City" required>
+
+        <input type="number" id="owners" placeholder="Number of Owners" required>
+
+        <select id="condition">
+            <option>excellent</option>
+            <option>good</option>
+            <option>average</option>
+        </select>
+
+        <button type="submit">Predict Price</button>
+
+    </form>
+
+    <div id="result"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
