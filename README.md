@@ -239,7 +239,7 @@ You can deploy this project on:
 
 Kaustubh Tole
 
-AI/ML Enthusiast | Mechanical Design Engineer | AI for Engineering Applications
+AI/ML Enthusiast | AI for Engineering Applications
 
 ---
 
